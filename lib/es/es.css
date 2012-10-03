@@ -405,6 +405,14 @@ SPAN.jsonPretty-boolean { color: purple; }
 	background: #f2f2f2;
 }
 
+tr.clusterOverview-node:nth-child(odd) { 
+    background: none repeat scroll 0 0 #FFFFFF; 
+}
+
+tr.clusterOverview-node:nth-child(even) { 
+    background: none repeat scroll 0 0 #CCCCCC; 
+}
+
 .clusterOverview-node.master {
 	background: #fff8dd;
 }
