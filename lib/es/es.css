@@ -406,11 +406,11 @@ SPAN.jsonPretty-boolean { color: purple; }
 }
 
 tr.clusterOverview-node:nth-child(odd) { 
-    background: none repeat scroll 0 0 #FFFFFF; 
+    background: none repeat scroll 0 0 #CCCCCC; 
 }
 
 tr.clusterOverview-node:nth-child(even) { 
-    background: none repeat scroll 0 0 #CCCCCC; 
+    background: none repeat scroll 0 0 #FFFFFF; 
 }
 
 .clusterOverview-node.master {
