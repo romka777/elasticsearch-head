@@ -392,11 +392,8 @@ SPAN.jsonPretty-boolean { color: purple; }
 .clusterOverview-cluster TD {
 	vertical-align: top;
 	padding: 2px 20px;
-}
-.clusterOverview-cluster TD {
     border: 1px solid #BBBBBB;
 }
-
 .clusterOverview TH {
 	font-weight: normal;
 	text-align: left;
