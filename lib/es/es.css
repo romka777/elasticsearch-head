@@ -387,6 +387,7 @@ SPAN.jsonPretty-boolean { color: purple; }
 /* es.ui.ClusterOverview */
 .clusterOverview-cluster {
 	border-collapse: collapse;
+    border: 1px solid #BBBBBB;
 }
 .clusterOverview-cluster TH,
 .clusterOverview-cluster TD {
