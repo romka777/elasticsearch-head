@@ -423,6 +423,7 @@ tr.clusterOverview-node:nth-child(even) {
 }
 .clusterOverview-routing {
 	position: relative;
+    border: 1px solid #BBBBBB;
 }
 .clusterOverview-nullReplica,
 .clusterOverview-replica {
