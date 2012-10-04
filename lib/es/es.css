@@ -387,12 +387,14 @@ SPAN.jsonPretty-boolean { color: purple; }
 /* es.ui.ClusterOverview */
 .clusterOverview-cluster {
 	border-collapse: collapse;
-    border: 1px solid #BBBBBB;
 }
 .clusterOverview-cluster TH,
 .clusterOverview-cluster TD {
 	vertical-align: top;
 	padding: 2px 20px;
+}
+.clusterOverview-cluster TD {
+    border: 1px solid #BBBBBB;
 }
 
 .clusterOverview TH {
