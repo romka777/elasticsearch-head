@@ -2,6 +2,11 @@
 .ui-right { float: right; padding-right: 30px}
 .require { color: #a00; }
 
+.clusterOverview-table {
+    position: relative;
+    top: 35px;
+}
+
 .uiToolbar {
 	height: 28px;
 	background: #fdfefe;
