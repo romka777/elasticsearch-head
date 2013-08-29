@@ -2886,6 +2886,7 @@
 			].concat(node.routings.map(this._routing_template, this))};
 		},
 		_indexHeader_template: function(index) {
+			var showAliases = false;
 			var closed = index.state === "close";
 			var line1 = closed ? "index: close" : ( "size: " + (index.status && index.status.index ? index.status.index.primary_size + " (" + index.status.index.size + ")" : "unknown" ) ); 
 			var line2 = closed ? "\u00A0" : ( "docs: " + (index.status && index.status.docs ? index.status.docs.num_docs + " (" + index.status.docs.max_doc + ")" : "unknown" ) );
@@ -2978,12 +2979,30 @@
 				}
 				return 0;
 			}
+			
+			
 			return { tag: "TABLE", cls: "uiClusterOverview-cluster", children: [
-				{ tag: "THEAD", child: { tag: "TR", children: indices.map(this._indexHeader_template, this) } },
-				cluster.aliases.length && { tag: "TBODY", children: cluster.aliases.map(this._alias_template, this) },
+				{ tag: "THEAD", child: { tag: "TR", children: indices.map(this._indexHeader_template, this) }},
+				{ tag: "THEAD", child: { tag: "TR", id: 'show-aliases-tr', child: {tag: "TD", cls: "uiSidebarSection-head", colspan: indices.length, child: {id: 'show-aliases-text', tag: "SPAN", text: "Show aliases"}, onclick: this._toggleAliases}}},
+				cluster.aliases.length && { id: 'aliases', tag: "TBODY", style: "display:none", children: cluster.aliases.map(this._alias_template, this) },
 				{ tag: "TBODY", children: cluster.nodes.sort(nodeHostnameCmp).map(this._node_template, this) }
 			] };
 		},
+		_toggleAliases: function()
+		{
+			if(this.showAliases) {
+				$('#aliases').hide();
+				$('#show-aliases-tr').removeClass('shown');
+				$('#show-aliases-text').text('Show aliases');
+				this.showAliases = false;
+			} else {
+				$('#aliases').show();
+				$('#show-aliases-tr').addClass('shown');
+				$('#show-aliases-text').text('Hide aliases');
+				this.showAliases = true;
+			}
+		},
+
 		_main_template: function() {
 			return { tag: "DIV", id: this.id(), cls: "uiClusterOverview", children: [
 				new ui.Toolbar({
