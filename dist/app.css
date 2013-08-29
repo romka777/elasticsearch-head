@@ -536,16 +536,20 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 
 .uiClusterOverview-cluster {
 	border-collapse: collapse;
+	border: 1px solid #BBBBBB;
 }
 .uiClusterOverview-cluster TH,
 .uiClusterOverview-cluster TD {
 	vertical-align: top;
 	padding: 2px 20px;
+	border: 1px solid #BBBBBB;
+	min-width: 200px;
 }
 
 .uiClusterOverview TH {
 	font-weight: normal;
 	text-align: left;
+	border: 1px solid #BBBBBB;
 }
 
 .uiClusterOverview TH.close,
@@ -554,7 +558,15 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 	background: #f2f2f2;
 }
 
-.uiClusterOverview-node.master {
+tr.uiClusterOverview-node:nth-child(odd) { 
+	background: none repeat scroll 0 0 #CCCCCC; 
+}
+
+tr.uiClusterOverview-node:nth-child(even) { 
+	background: none repeat scroll 0 0 #FFFFFF; 
+}
+
+tr.uiClusterOverview-node.master {
 	background: #fff8dd;
 }
 
@@ -564,6 +576,7 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 }
 .uiClusterOverview-routing {
 	position: relative;
+	border: 1px solid #BBBBBB;
 }
 .uiClusterOverview-nullReplica,
 .uiClusterOverview-replica {
@@ -590,12 +603,16 @@ SPAN.uiJsonPretty-boolean { color: purple; }
 	text-align: center;
 }
 .uiClusterOverview-hasAlias.max {
+/*
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
+*/
 }
 .uiClusterOverview-hasAlias.min {
+/*
 	border-top-left-radius: 8px;
 	border-bottom-left-radius: 8px;
+*/
 }
 .uiClusterOverview-hasAlias-remove {
 	float: right;

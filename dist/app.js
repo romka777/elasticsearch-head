@@ -1966,6 +1966,7 @@
 		init: function() {
 			this._super();
 			this.metadata = this.config.metadata;
+			this.metadata.indices.sort().reverse();
 			this.query = this.config.query;
 			this.el = $(this._main_template());
 		},
@@ -2356,6 +2357,13 @@
 					query = JSON.stringify(JSON.parse(this.dataEl.val())),
 					transform = this.transformEl.val(),
 					base_uri = this.base_uriEl.val();
+
+			var urlData = base_uri.split('/'), pathData = path.split('/');
+			if(urlData.length + pathData.length < 7) {
+				if(!confirm('А ты хорошо подумал ???'))
+					return;
+			}
+			
 			if(jEv && jEv.originalEvent) { // if the user click request
 				if(this.timer) {
 					window.clearTimeout(this.timer); // stop any cron jobs
@@ -2644,7 +2652,7 @@
 				$.each(clusterState.routing_table.indices, function(name, index){
 					indexNames.push(name);
 				});
-				indexNames.sort().forEach(function(name) {
+				indexNames.sort().reverse().forEach(function(name) {
 					var index = clusterState.routing_table.indices[name];
 					$.each(index.shards, function(name, shard) {
 						shard.forEach(function(replica){
@@ -2850,11 +2858,11 @@
 					{ tag: "DIV", cls: "uiClusterOverview-title", text: node.name }
 				] : [
 					{ tag: "DIV", children: [
-						{ tag: "SPAN", cls: "uiClusterOverview-title", text: node.cluster.name },
-						" ",
-						{ tag: "SPAN", text: node.name }
+						{ tag: "SPAN", cls: "uiClusterOverview-title", text: node.cluster.name }
 					]},
+					{ tag: "SPAN", text: node.name },
 					{ tag: "DIV", text: node.cluster.http_address },
+					{ tag: "DIV", text: node.cluster.hostname },
 					{ tag: "DIV", cls: "uiClusterOverview-controls", children: [
 						new ui.MenuButton({
 							label: i18n.text("NodeInfoMenu.Title"),
@@ -2946,6 +2954,16 @@
 			this)) };
 		},
 		_cluster_template: function(cluster, indices) {
+			function nodeHostnameCmp(first, second) {
+				if (!(first.cluster && second.cluster)) {
+					return 0;
+				}
+				a = first.cluster.hostname;
+				b = second.cluster.hostname;
+				if (a.toString() < b.toString()) return -1;
+				if (a.toString() > b.toString()) return 1;
+				return 0;
+			}
 			function nodeNameCmp(first, second) {
 				if (!(first.cluster && second.cluster)) {
 					return 0;
@@ -2963,7 +2981,7 @@
 			return { tag: "TABLE", cls: "uiClusterOverview-cluster", children: [
 				{ tag: "THEAD", child: { tag: "TR", children: indices.map(this._indexHeader_template, this) } },
 				cluster.aliases.length && { tag: "TBODY", children: cluster.aliases.map(this._alias_template, this) },
-				{ tag: "TBODY", children: cluster.nodes.sort(nodeNameCmp).map(this._node_template, this) }
+				{ tag: "TBODY", children: cluster.nodes.sort(nodeHostnameCmp).map(this._node_template, this) }
 			] };
 		},
 		_main_template: function() {
@@ -3160,13 +3178,20 @@
 		},
 		
 		_main_template: function() {
+			var options = [
+				{ value: 'http://develastic00.kvm.int.ilook.ru:9200/', text: "Devel" },
+				{ value: 'http://es.ilook.ru/', text: "Ilook"},
+				{ value: 'http://br-es-04.kvm.int.ilook.ru:9200/', text: "Brands"},
+				{ value: 'http://localhost:9200/', text: "Localhost" }
+			];
+
 			return { tag: "SPAN", cls: "uiClusterConnect", children: [
-				{ tag: "INPUT", type: "text", cls: "uiClusterConnect-uri", onkeyup: function( jEv ) {
-					if(jEv.which === 13) {
-						jEv.preventDefault();
-						this._reconnect_handler();
-					}
-				}.bind(this), id: this.id("baseUri"), value: this.config.base_uri },
+				{ tag: "SELECT", cls: "uiClusterConnect-uri", name: "cron", children: options.map(function(op) {
+					if(op.value == this.config.base_uri)
+						op.selected = true;
+					return acx.extend({ tag: "OPTION"}, op); }, this) 
+				},
+
 				{ tag: "BUTTON", type: "button", text: i18n.text("Header.Connect"), onclick: this._reconnect_handler },
 				{ tag: "SPAN", cls: "uiClusterConnect-name" },
 				{ tag: "SPAN", cls: "uiClusterConnect-status" }
@@ -3474,6 +3499,14 @@
 		_update_handler: function(data) {
 			var options = [];
 			for(var name in data.indices) { options.push(this._option_template(name, data.indices[name])); }
+			options = options.sort(function(a, b) {
+				if(a.value > b.value)
+					return -1;
+				else if(a.value < b.value)
+					return 1;
+				else
+					return 0;
+			});
 			this.el.find(".uiIndexSelector-select").empty().append(this._select_template(options));
 			this._indexChanged_handler();
 		},

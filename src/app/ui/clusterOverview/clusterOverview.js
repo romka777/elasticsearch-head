@@ -307,6 +307,7 @@
 						{ tag: "SPAN", text: node.name }
 					]},
 					{ tag: "DIV", text: node.cluster.http_address },
+					{ tag: "DIV", text: node.cluster.hostname },
 					{ tag: "DIV", cls: "uiClusterOverview-controls", children: [
 						new ui.MenuButton({
 							label: i18n.text("NodeInfoMenu.Title"),
