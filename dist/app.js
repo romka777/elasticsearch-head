@@ -1966,7 +1966,8 @@
 		init: function() {
 			this._super();
 			this.metadata = this.config.metadata;
-			this.metadata.indices.sort().reverse();
+			console.log(this.metadata.indices);
+//			this.metadata.indices.sort().reverse();
 			this.query = this.config.query;
 			this.el = $(this._main_template());
 		},
