@@ -582,8 +582,8 @@ tr.uiClusterOverview-node.master {
 .uiClusterOverview-replica {
 	cursor: pointer;
 	float: left;
-	height: 40px;
-	width: 31px;
+	height: 50px;
+	width: 41px;
 	margin: 4px;
 	border: 2px solid #444;
 	font-size: 32px;
