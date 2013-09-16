@@ -3202,6 +3202,7 @@
 				{ value: 'http://develastic00.kvm.int.ilook.ru:9200/', text: "Devel" },
 				{ value: 'http://es.ilook.ru/', text: "Ilook"},
 				{ value: 'http://br-es-04.kvm.int.ilook.ru:9200/', text: "Brands"},
+                { value: 'http://localhost:9100/', text: "SA" },
 				{ value: 'http://localhost:9200/', text: "Localhost" }
 			];
 
